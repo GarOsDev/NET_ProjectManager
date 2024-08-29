@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ProyectoManager.Models.Publicaciones>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.contenido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id_usuario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contenido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_usuario)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id_publicacion">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id_publicacion">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_publicacion">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

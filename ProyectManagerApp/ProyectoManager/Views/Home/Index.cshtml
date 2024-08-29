@@ -1,0 +1,412 @@
+﻿@model PublicationIndexViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div id="dashboard" class="row oculto">
+    <div class="col-md-3 col-12 mb-md-0 mb-4 text-center text-white d-flex flex-column rounded-bottom rounded-start border-bottom border-3 border-danger menu">
+        <div class="mt-5 mb-5 p-3">
+            <img src="~/gifts/dashboard.gif" class="rounded mt-5 border border-secondary border-5" style="width:120px;" />
+        </div>
+        <div id="menu" class="menu bg-secondary bg-opacity-50 rounded">
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Home/Index">Dashboard</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Roles/Index">Roles</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Usuarios/Index">Usuarios</a></div>
+            <div class="p-3 fs-5"><a class="menuLink" href="../Archivos/Index">Archivos Validados</a></div>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-12">
+
+        <div class="row p-2 text-white mensajeBienv rounded-end">
+            <svg class="col-1 my-auto" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+            </svg>
+            <p class="col-md-11 col-11 fs-3 my-auto text-start">
+                <span id='text' class="m-3 p-3"></span>
+            </p>
+        </div>
+
+        <div class="col-12 mt-3 my-auto text-center">
+            <button type="button" class="btn btn-success text-center cajaCrearUsuario" data-bs-toggle="modal" data-bs-target="#CreatePublication">
+                Crear Publicación
+            </button>
+        </div>
+
+        <hr />
+
+        <div class="row p-3 mt-3 justify-content-center">
+            <div class="row">
+                <div class="col-auto fs-4 border border-dark border-2 p-2 rounded text-light labelInfo">Publicaciones por creador</div>
+            </div>
+            <div class="row mt-4 justify-content-center p-2 rounded-end">
+                <div class="col-8 mx-auto">
+                    <canvas id="myDashChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row p-3 mx-1 my-3 bg-secondary bg-opacity-50 rounded border border-secondary border-3">
+            <div class="col-12">
+
+                <div class="row">
+                    <div class="col-md-4 col-12 fs-4 border-bottom border-danger border-3">Buscador de Publicaciones</div>
+                </div>
+
+                <div class="row">
+
+                    <div class="row m-3 justify-content-center">
+                        <div class="col-md-10 col-12 text-center">
+                            <div class="row justify-space-around">
+
+                                <form class="row mt-3 justify-content-evenly" asp-controller="Home" asp-action="Index" method="post">
+                                    <div class="col-md-2 col-12 mb-md-0 mb-2"><input id="inputSearchTitle" class="form-control" type="text" name="SearchTitle" placeholder="Titulo" /></div>
+                                    <div class="col-md-4 col-12 mb-md-0 mb-2"><input id="inputSearchContent" class="form-control" type="text" name="SearchContent" placeholder="Contenido (palabra clave)" /></div>
+                                    <div class="col-md-3 col-12 mb-md-0 mb-2"><input id="inputSearchDate" class="form-control" type="datetime" name="SearchDate" placeholder="Fecha" /></div>
+                                    <div class="col-md-3 col-12 mb-md-0 mb-2"><input class="form-control btn-danger" rounded" type="submit" value="Search/Reset" /></div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row m-3">
+
+                        <div id="infoCabecera" class="row mb-3 mt-3 fs-5 text-center text-light rounded border border-2 border-dark infoCabecera">
+                            <div class="col-md-1 col-12 my-auto text-center">Id</div>
+                            <div class="col-md-3 col-12 my-auto text-center">Título</div>
+                            <div class="col-md-2 col-12 my-auto text-center">Fecha</div>
+                            <div class="col-md-3 col-12 my-auto text-center">Creador</div>
+                            <div class="col-md-3 col-12 my-auto text-center">CRUD</div>
+                        </div>
+
+                        @{
+                            if (!(Model.Publicaciones.Any()))
+                            {
+                                <div class="row text-center my-3"><p class="col-7 fs-4 bg-danger p-1 rounded-pill mx-auto text-white border border-2 border-dark">Sin resultados</p></div>
+                            }
+                            else
+                            {
+                                foreach (var d in Model.Publicaciones)
+                                {
+                                    <div class="row mt-4 justify-content-center text-center border border-2 border-dark rounded shadow">
+                                        <div class="row mb-2 mt-2 bg-light rounded p-1">
+                                            <div class="col-md-1 col-12 p-2 my-auto bg-danger rounded text-light">@d.id_publicacion</div>
+                                            <div class="col-md-3 col-12 my-auto">@d.titulo</div>
+                                            <div class="col-md-2 col-12 my-auto">@d.fecha</div>
+                                            <div class="col-md-3 col-12 my-auto autor">@d.nombre</div>
+                                            <div class="col-md-3 col-12 my-auto">
+                                                <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#EditPublication-@d.id_publicacion">
+                                                    Editar
+                                                </button>
+                                                <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#DeletePublication-@d.id_publicacion">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row p-3">
+                                            <div class="col-12 bg-dark bg-opacity-75 mb-4 text-center rounded text-light fs-5">Contenido de Publicación</div>
+                                            <div class="col-12 my-auto bg-light rounded border border-dark p-2">@Html.Raw(d.contenido)</div>
+                                        </div>
+                                    </div>
+
+                    // -------------------------------------------------- VENTANA MODAL --------------------------------------------------
+
+                                    @* --------------- EDITAR PUBLICACION ------------------ *@
+
+                                    <div class="modal fade" id="EditPublication-@d.id_publicacion" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="addModalLabel">Editar Publicación</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div id="notificaciones"></div>
+
+                                                <div class="modal-body">
+
+                                                    <form asp-action="Update" id="editPubliForm" method="post" class="was-validated">
+
+                                                        <input type="hidden" name="id_publicacion" value="@d.id_publicacion" />
+
+                                                        <div class="form-group">
+                                                            <label class="control-label" for="titulo">Titulo</label>
+                                                            <input id="titulo" name="titulo" class="form-control" type="text" value="@d.titulo" required />
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label" for="fecha">Fecha</label>
+                                                            <input id="fecha" name="fecha" class="form-control" type="date" value="@d.fecha" required />
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label mb-1" for="fecha">Contenido</label>
+                                                            <textarea id="editPubliContent" name="contenido" cols="50" rows="15" class="rounded textarea">@d.contenido</textarea>
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label" for="usuario">Creador</label>
+                                                            <select id="usuario" name="id_usuario" class="form-control">
+                                                                <option disabled selected>Seleccione un creador</option>
+                                                                @foreach (var rol in Model.Usuarios)
+                                                                {
+                                                                    <option value="@rol.id_usuario">@rol.nombre</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-primary">Editar</button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    @* --------------- CREAR PUBLICACION ------------------ *@
+
+                                    <div class="modal fade" id="CreatePublication" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="addModalLabel">Crear publicación en línea</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div id="notificaciones"></div>
+
+                                                <div class="modal-body">
+
+                                                    <form asp-action="Create" id="createPubliForm" method="post" class="was-validated">
+
+                                                        <div class="form-group">
+                                                            <label class="control-label" for="titulo">Titulo</label>
+                                                            <input id="titulo" name="titulo" class="form-control" type="text" required />
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label" for="fecha">Fecha</label>
+                                                            <input id="fecha" name="fecha" class="form-control" type="date" required />
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label mb-1" for="fecha">Contenido</label>
+                                                            <textarea id="createPubliContent" name="contenido" cols="50" rows="50" class="rounded textarea"></textarea>
+                                                        </div>
+
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label" for="usuario">Creador</label>
+                                                            <select id="usuario" name="id_usuario" class="form-control">
+                                                                <option disabled selected>Seleccione Creador</option>
+                                                                @foreach (var rol in Model.Usuarios)
+                                                                {
+                                                                    <option value="@rol.id_usuario">@rol.nombre</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-primary">Crear</button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @* --------------- ELIMINAR PUBLICACIÓN------------------ *@
+
+                                    <div class="modal fade" id="DeletePublication-@d.id_publicacion" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="addModalLabel">Eliminar Publicación</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <p>¿Desea eliminar esta Publicación?</p>
+
+                                                    <div class="modal-footer">
+                                                        <form asp-action="Delete" method="post">
+                                                            <input type="hidden" name="id_publicacion" value="@d.id_publicacion" />
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-secondary">Borrar</button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    tinymce.init({
+        selector: '.textarea',
+        plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+        editimage_cors_hosts: ['picsum.photos'],
+        menubar: 'file edit view insert format tools table help',
+        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+        autosave_ask_before_unload: true,
+        autosave_interval: '30s',
+        autosave_prefix: '{path}{query}-{id}-',
+        autosave_restore_when_empty: false,
+        autosave_retention: '2m',
+        image_advtab: true,
+        importcss_append: true,
+        media_live_embeds: true,
+        automatic_uploads: true,
+        images_upload_url: '/upload/image',
+        file_picker_types: 'file image media',
+        image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'No border', value: 'img_no_border' },
+            { title: 'Green border', value: 'img_green_border' },
+            { title: 'Blue border', value: 'img_blue_border' },
+            { title: 'Red border', value: 'img_red_border' },
+            { title: 'miClaseCSS', value: 'miClaseCSSTiny' }
+        ],
+        setup: function (editor) {
+            editor.on('ExecCommand', function (e) {
+                if (e.command == 'mceInsertContent') {
+                    const imgs = editor.dom.select('img');
+                    imgs.forEach(img => {
+                        if (!img.classList.contains('miClaseCSSTiny')) {
+                            img.classList.add('miClaseCSSTiny');
+                        }
+                    });
+                }
+            });
+        },
+        image_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '/upload/image');
+
+            xhr.onload = function () {
+                var json;
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    failure('HTTP ERROR:' + xhr.status);
+                    return;
+                }
+                json = JSON.parse(xhr.responseText);
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON' + xhr.responseText)
+                    return;
+                }
+                success(json.location);
+            };
+
+            formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        },
+        height: 450,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        noneditable_class: 'mceNonEditable',
+        toolbar_mode: 'sliding',
+        contextmenu: 'link image table',
+        skin: 'oxide',
+        content_css: 'default',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+    });
+
+
+    // --------------------------------- ChartJS
+
+    const ctx = document.getElementById('myDashChart');
+    let arrayCreadores = [];
+    let objUsu = {};
+    let creadores = document.getElementsByClassName("autor");
+
+    console.log(creadores);
+
+    for (let usu of creadores) {
+        arrayCreadores.push(usu.innerHTML.trim());
+
+    }
+
+    for (const nombre of arrayCreadores) {
+        if (objUsu[nombre]) {
+            objUsu[nombre]++;
+        } else {
+            objUsu[nombre] = 1;
+        }
+    }
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(objUsu),
+            datasets: [{
+                label: 'NºArticulos/Creador',
+                data: Object.values(objUsu),
+                backgroundColor: [
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 159, 64)',
+                    'rgba(255, 205, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 255)',
+                    'rgba(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+
+    // Script para prevenir que bootstrap bloquee los inputs de tiny mce
+    document.addEventListener('focusin', (e) => {
+        if (e.target.closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root") !== null) {
+            e.stopImmediatePropagation();
+        }
+    });
+
+
+</script>
+
+
+

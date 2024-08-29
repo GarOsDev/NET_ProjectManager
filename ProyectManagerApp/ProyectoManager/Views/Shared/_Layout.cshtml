@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProyectoManager</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProyectoManager.styles.css" asp-append-version="true" />
+
+    @*<link href="~/lib/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/lib/sb-admin-2/css/sb-admin-2.min.css" rel="stylesheet"> *@
+
+    <script src="~/js/site.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    @* API EDITOR TEXTO TINYMCE *@
+    <script src="https://cdn.tiny.cloud/1/5jcrfkgljoraufnagebwum7v7j3a1376zuk7u9spffuzfy3s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+</head>
+<body>
+    <header>
+        <div class="container-fluid p-3 box-shadow mb-3 text-light navbarppal">
+            <div class="row">
+
+                <div class="col-8 my-auto flex-column">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-database-fill-lock" viewBox="0 0 16 16">
+                        <path d="M8 1c-1.573 0-3.022.289-4.096.777C2.875 2.245 2 2.993 2 4s.875 1.755 1.904 2.223C4.978 6.711 6.427 7 8 7s3.022-.289 4.096-.777C13.125 5.755 14 5.007 14 4s-.875-1.755-1.904-2.223C11.022 1.289 9.573 1 8 1" />
+                        <path d="M3.904 9.223C2.875 8.755 2 8.007 2 7v-.839c.457.432 1.004.751 1.49.972C4.722 7.693 6.318 8 8 8s3.278-.307 4.51-.867c.486-.22 1.033-.54 1.49-.972V7c0 .424-.155.802-.411 1.133a4.5 4.5 0 0 0-1.364-.125 3 3 0 0 0-2.197.731 4.5 4.5 0 0 0-1.254 1.237A12 12 0 0 1 8 10c-1.573 0-3.022-.289-4.096-.777M8 14c-1.682 0-3.278-.307-4.51-.867-.486-.22-1.033-.54-1.49-.972V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16q.134 0 .266-.003A2 2 0 0 1 8 15zm0-1.5q0 .15.01.3A2 2 0 0 0 8 13c-1.573 0-3.022-.289-4.096-.777C2.875 11.755 2 11.007 2 10v-.839c.457.432 1.004.751 1.49.972C4.722 10.693 6.318 11 8 11q.13 0 .257-.002A4.5 4.5 0 0 0 8 12.5" />
+                        <path d="M9 13a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1" />
+                    </svg>
+                    <a class="navbar-brand text-white border-bottom border-danger border-3 fs-2" asp-area="" asp-controller="Home" asp-action="Index">ProjectManager</a>
+                    <a class="navbar-brand text-white fs-5 ms-5 menuEnlace" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="navbar-brand text-white fs-5 menuEnlace" asp-area="" asp-controller="Home" asp-action="CerrarSesion">Cerrar Sesion</a>
+                </div>
+                <div class="col-3 my-auto rounded border border-2 border-dark text-center text-light fondoInformaciones rutaURL">Current location: <b><span id="migaPan"></span></b></div>
+            </div>
+
+
+        </div>
+
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center mb-2">
+            <div class="col-5 navbarppal rounded-2 text-center">
+                <div id="hora" class="text-light fst-italic fs-4"></div>
+            </div>
+        </div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted foter navbarppal">
+        <div class="container text-white">
+            &copy; 2024 - ProjectManager - <a class="rounded my-auto linkPrivacy" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

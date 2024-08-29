@@ -1,0 +1,144 @@
+﻿@model IEnumerable<ProyectoManager.Models.Roles>
+@using ProyectoManager.Data
+@using ProyectoManager.Controllers
+
+@{
+    ViewData["Title"] = "Roles y Permisos";
+}
+
+<div class="row">
+    <div class="col-md-3 col-12 mb-md-0 mb-4 text-center text-white d-flex flex-column rounded-bottom rounded-start border-bottom border-3 border-danger menu">
+        <div class="mt-5 mb-5 p-3">
+            <img src="~/gifts/scales.gif" class="rounded mt-5 border border-secondary border-5" style="width:120px;" />
+        </div>
+        <div id="menu" class="menu bg-secondary bg-opacity-50 rounded">
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Home/Index">Dashboard</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Roles/Index">Roles</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Usuarios/Index">Usuarios</a></div>
+            <div class="p-3 fs-5"><a class="menuLink" href="../Archivos/Index">Archivos Validados</a></div>
+        </div>
+    </div>
+    <div class="col-md-9 col-12">
+        <div class="row p-2 text-white rounded-end mensajeBienv">
+            <svg class="col-2 my-auto" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+            </svg>
+            <p class="col-8 fs-3 my-auto text-start">Roles Registrados</p>
+        </div>
+
+        <div class="row justify-content-center m-4">
+
+            <div class="col-md-5 col-12 mb-3 mb-2 mb-md-0 border border-secondary border-3 rounded p-3 bg-light">
+                <div class="fs-5 text-center p-1 rounded text-light fondoInformaciones">Información Roles</div>
+                <div class="mt-2 mb-2">Roles existentes: <span id="totRol"></span></div>
+                <div id="nombresRoles" class="mt-3"></div>                
+            </div>
+
+            <div class="col-md-5 col-12 my-auto text-center">  
+                <button type="button" class="btn btn-success text-center cajaCrearUsuario" data-bs-toggle="modal" data-bs-target="#CreateRol">
+                    Crear Rol
+                </button>
+            </div>
+        </div>
+
+        @* --------------------- VENTANA MODAL CREAR ROL ----------------------- *@
+
+        <div class="modal fade" id="CreateRol" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addModalLabel">Crear Rol</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form asp-action="Create" method="post" class="was-validated">
+                            <div class="form-group m-1">
+                                <label class="control-label" for="rol">Nuevo Rol</label>
+                                <input id="rol" name="nombre_rol" class="form-control" type="text" required/>
+                            </div>
+                            <div class="form-group m-1">
+                                <input type="submit" value="Create" class="btn btn-primary"/>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @* ------------------------------------------------------------ *@
+
+        <div class="row p-3 mx-1 my-3 bg-secondary bg-opacity-50 rounded">
+            <div class="col-12">
+
+                <div class="row m-3">
+
+                    <table class="table">
+
+                        <div class="row mb-2 fs-5 text-center rounded text-white cabecera">
+                            <div class="col-3">Id Rol</div>
+                            <div class="col-4">Nombre Rol</div>
+                            <div class="col-5">CRUD</div>
+                        </div>
+
+                        <tbody>
+                            @{
+                                if (!(Model.Any()))
+                                {
+                                    <div class="row text-center my-3"><p class="col-7 fs-2 bg-danger p-1 rounded-pill mx-auto text-white border border-2 border-dark">Sin Roles Registrados</p></div>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="row bg-light justify-content-center border border-secondary border-2 mt-1 rounded">
+
+                                            <div class="col-md-3 col-6 text-center my-auto">
+                                                @Html.DisplayFor(modelItem => item.id_rol)
+                                            </div>
+                                            <div class="col-md-4 col-6 text-center my-auto rolesActuales">
+                                                @item.nombre_rol
+                                            </div>
+                                            <div class="col-md-5 col-12 text-center">
+                                                <div class="row justify-content-evenly p-1">
+                                                    <div class="col-2">
+                                                        <button type="button" class="btn btn-outline-light fondoCRUD" data-bs-toggle="modal" data-bs-target="@("#EditRol-" + item.id_rol)" data-url="@Url.Action($"Edit/{item.id_rol}")">
+                                                            Editar
+                                                        </button>
+                                                        @await Html.PartialAsync("_EditRolPartialView", item)
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <button type="button" class="btn btn-outline-light fondoCRUD" data-bs-toggle="modal" data-bs-target="@("#DetailRol-" + item.id_rol)" data-url="@Url.Action($"Detail/{item.id_rol}")">
+                                                            Detalles
+                                                        </button>
+                                                        @await Html.PartialAsync("_DetailRolPartialView", item)
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="@("#DeleteRol-" + item.id_rol)" data-url="@Url.Action($"Delete/{item.id_rol}")">
+                                                            Eliminar
+                                                        </button>
+                                                        @await Html.PartialAsync("_DeleteRolPartialView", item)
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

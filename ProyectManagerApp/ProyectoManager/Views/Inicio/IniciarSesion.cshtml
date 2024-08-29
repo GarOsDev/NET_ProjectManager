@@ -1,0 +1,86 @@
+﻿@model ProyectoManager.Models.Usuarios;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <title>IniciarSesion</title>
+</head>
+<body id="formularioLogin">
+    <div class="container mt-3">
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-12">
+                <div class="row justify-content-center align-items-center p-3 text-center border border-dark border-3 rounded header">
+                    <div class="col-6"><img class="logo" src="~/assets/svg/handshake.svg" /></div>
+                    <div class="col-4 my-auto">
+                        <div class="mx-auto balloon">Project Manager</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-4 col-md-6">
+                <div class="card">
+                    <div class="card-body text-center form">
+                        <form id="formLogin" asp-controller="Inicio" asp-action="IniciarSesion" method="post">
+                            <input type="text" class="form-control mb-3" placeholder="e-mail" required name="email"/>
+                            <input type="password" class="form-control mb-3" placeholder="contraseña" required name="contrasena" />
+
+                            <div class="d-grid gap-2 mb-3">
+                                <button id="iniciarSesion" class="btn border border-2 border-dark w-50 mx-auto iniciarSesion" type="submit">Iniciar Sesión</button>
+                            </div>
+
+                            @if(ViewData["Mensaje"] != null)
+                            {
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["Mensaje"];
+                                    </div>
+                                </div>
+                            }
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5 rowFooter">
+            <div class="col-12 foot">
+                <div class="row justify-content-center align-items-center p-3 text-center border border-dark rounded border-3 ">
+
+                    <div class="col-4 p-3 d-flex flex-column">
+                        <div class="p-3 mx-auto w-25 linkBox"><img id="imgFooter1" class="img-fluid" src="~/assets/svg/mail.svg" /></div>
+                        <div class="p-3 linkBox"><a class="infoLink" href="#" onmouseover="rotateImg1()" onmouseout="quitRotate1()">Contacto</a></div>
+                    </div>
+
+                    <div class="col-4 p-3 d-flex flex-column">
+                        <div class="p-3 mx-auto w-25 linkBox"><img id="imgFooter2" class="img-fluid" src="~/assets/svg/boss.svg" /></div>
+                        <div class="p-3 linkBox"><a class="infoLink" href="@Url.Action("Registrarse","Inicio")" onmouseover="rotateImg2()" onmouseout="quitRotate2()">Registro</a></div>
+                    </div>
+
+                    <div class="col-4 p-3 d-flex flex-column">
+                        <div class="p-3 mx-auto w-25 linkBox"><img id="imgFooter3" class="img-fluid" src="~/assets/svg/pixelarticons.svg" /></div>
+                        <div class="p-3 linkBox"><a class="infoLink" href="#" onmouseover="rotateImg3()" onmouseout="quitRotate3()">Sobre PM</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</html>

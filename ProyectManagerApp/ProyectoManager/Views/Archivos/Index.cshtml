@@ -1,0 +1,292 @@
+﻿@model ProjectIndexViewModel
+
+@{
+    ViewData["Title"] = "Archivos";
+}
+
+<div class="row">
+    <div class="col-md-3 col-12 mb-md-0 mb-4 text-center text-white d-flex flex-column rounded-bottom rounded-start border-bottom border-3 border-danger menu">
+        <div class="mt-5 mb-5 p-3">
+            <img src="~/gifts/approved.gif" class="rounded mt-5 border border-secondary border-5" style="width:120px;" />
+        </div>
+        <div id="menu" class="menu bg-secondary bg-opacity-50 mb-5 rounded">
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Home/Index">Dashboard</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Roles/Index">Roles</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Usuarios/Index">Usuarios</a></div>
+            <div class="p-3 fs-5"><a class="menuLink" href="../Archivos/Index">Archivos Validados</a></div>
+        </div>
+    </div>
+    <div class="col-md-9 col-12">
+
+        <div class="row p-2 text-white rounded-end mensajeBienv">            
+            <svg class="col-2 my-auto" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z" />
+            </svg>
+            <p class="col-md-7 col-10 fs-3 my-auto text-start">Archivos Validados para Publicaciones</p>
+        </div>
+
+        <div class="row justify-content-center m-4">
+            <div class="col-md-5 col-12 my-auto text-center">
+                <button type="button" class="btn btn-success text-center cajaCrearUsuario" data-bs-toggle="modal" data-bs-target="#NewProject">
+                    Validar Archivo
+                </button>
+            </div>
+        </div>
+
+        @* --------------- MODAL CREAR VALIDACIÓN ------------------ *@
+
+        <div class="modal fade" id="NewProject" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addModalLabel">Validar nuevo archivo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form asp-action="Create" method="post" class="was-validated" onsubmit="rutasAbsolutas()">
+
+                            <input id="rutaValorCrear" type="hidden" name="ruta"/>
+
+                            <div class="form-group">
+                                <label class="control-label" for="nombre">Nombre</label>
+                                <input id="nombre" name="nombre" class="form-control" type="text" required />
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label class="control-label" for="tipo">Tipo Archivo</label>
+                                <input id="tipo" name="tipo" class="form-control" type="text" required />
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label class="control-label" for="ruta">Archivo</label>
+                                <input id="ruta" class="form-control" type="file" required />
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label class="control-label" for="titulo">Publicacion</label>
+                                <select id="titulo" name="id_publicacion" class="form-control">
+                                    <option disabled selected>Seleccione Publicación para el archivo</option>
+                                    @foreach (var titulo in Model.Publicaciones)
+                                    {
+                                    <option value="@titulo.id_publicacion">@titulo.titulo</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Validar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* -------------------------------------------------------------------- *@
+
+        <div class="row p-3 mx-1 my-3 bg-secondary bg-opacity-50 rounded">
+            <div class="col-12">
+
+                <div class="row">
+                    <div class="row m-3">
+
+                        @foreach (var item in Model.Proyectos)
+                        {
+
+                            @* ------------------------------ REGISTROS MOSTRADOS -------------------------------- *@
+
+                            <div class="row mt-3 mb-3 p-2 text-center border border-3 border-light justify-content-center rounded">
+
+                                <div class="row mb-2 fs-5 text-center rounded text-white cabecera">
+                                    <div class="col-md-4 col-12 my-auto">Nombre Ref.</div>
+                                    <div class="col-md-4 col-12 my-auto">Tipo Archivo</div>
+                                    <div class="col-md-4 col-12 my-auto">Publicación Ref.</div>
+                                </div>
+
+                                <div class="row bg-light rounded p-2">
+                                    <div class="col-md-4 col-12 mb-sm-1 mb-2 my-auto">@Html.DisplayFor(modelItem => item.nombre)</div>
+                                    <div class="col-md-4 col-12 mb-sm-1 mb-2 my-auto">@Html.DisplayFor(modelItem => item.tipo)</div>
+                                    <div class="col-md-4 col-12 mb-sm-0 mb-2 my-auto p-1 rounded w-25 mx-auto text-dark tituloPublicacionArchivo">@Html.DisplayFor(modelItem => item.titulo)</div>
+                                </div>
+
+                                <div class="row mb-2 mt-2 fs-5 text-center rounded text-white cabecera">
+                                    <div class="col-md-7 col-12 my-auto">Archivo</div>
+                                    <div class="col-md-5 col-12 my-auto">CRUD</div>
+                                </div>
+
+                                <div class="row justify-content-center bg-light rounded p-2 my-auto">
+                                    <div class="col-md-7 col-12 mb-sm-2 mb-2 my-auto">@Html.DisplayFor(modelItem => item.ruta)</div>
+                                    <div class="col-md-5 col-12 mb-sm-0 mb-2 my-auto">
+
+                                        <div class="row justify-content-center text-center">
+                                            <div class="col-md-4 col-12 mb-sm-0 mb-2 my-auto">
+                                                <button id="editbutton" type="button" class="btn btn-outline-light fondoCRUD mx-auto" data-bs-toggle="modal" data-bs-target="@("#EditProject-" + item.id_archivo)">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="col-md-4 col-12 mb-sm-0 mb-2 my-auto">
+                                                <button type="button" class="btn btn-outline-light fondoCRUD mx-auto" data-bs-toggle="modal" data-bs-target="@("#DetailProject-" + item.id_archivo)">
+                                                    Detalles
+                                                </button>
+                                            </div>
+
+                                            <div class="col-md-4 col-12 mb-sm-0 mb-2 my-auto">
+                                                <button type="button" class="btn btn-danger mx-auto" data-bs-toggle="modal" data-bs-target="@("#DeleteProject-" + item.id_archivo)">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* ------------------------------ VENTANAS MODALES -------------------------------- *@
+
+                            @* --------------- EDITAR ------------------ *@
+
+                            <div class="modal fade" id="EditProject-@item.id_archivo" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Editar Archivo</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <form asp-action="Update" method="post" class="was-validated" onsubmit="rutasAbsolutas()">
+
+                                                <input type="hidden" name="id_archivo" value="@item.id_archivo"/>
+                                                <input id="rutaValorEditar" type="hidden" name="ruta"/>
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="nombre">Nombre Ref.</label>
+                                                    <input id="nombre" name="nombre" class="form-control" type="text" required />
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="tipo">Tipo Archivo</label>
+                                                    <input id="tipo" name="tipo" class="form-control" type="text" required />
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="rutaEditar">Archivo</label>
+                                                    <input type="file" id="rutaEditar" class="form-control" required/>
+                                                </div>
+
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="titulo">Publicación Ref.</label>
+                                                    <select id="titulo" name="id_publicacion" class="form-control">
+                                                        <option disabled selected>Seleccione Publicación del archivo</option>
+                                                        @foreach (var titulo in Model.Publicaciones)
+                                                        {
+                                                            <option value="@titulo.id_publicacion">@titulo.titulo</option>
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* --------------- DETALLES ------------------ *@
+
+                            <div class="modal fade" id="DetailProject-@item.id_archivo" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Detalles de Archivo</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">ID Archivo</dt>
+                                                <dd class="col-sm-9">@item.id_archivo</dd>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <dt class="col-sm-3">Nombre Ref.</dt>
+                                                <dd class="col-sm-9">@item.nombre</dd>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <dt class="col-sm-3">Tipo Archivo</dt>
+                                                <dd class="col-sm-9">@item.tipo</dd>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <dt class="col-sm-3 text-center">Ruta Almacenamiento</dt>
+                                                <dd class="col-sm-9 text-center text-wrap">@item.ruta</dd>
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <dt class="col-sm-4 text-center">Publicación Ref</dt>
+                                                <dd class="col-sm-8">@item.titulo</dd>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* --------------- ELIMINAR ------------------ *@
+
+                            <div class="modal fade" id="DeleteProject-@item.id_archivo" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Eliminar Archivo</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <p>¿Confirmar Eliminación?</p>
+
+                                            <div class="modal-footer">
+
+                                                <form asp-action="Delete" method="post">
+                                                    <input type="hidden" name="id_archivo" value="@item.id_archivo" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-secondary">Borrar</button>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

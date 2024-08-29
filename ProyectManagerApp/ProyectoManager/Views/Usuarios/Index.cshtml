@@ -1,0 +1,362 @@
+﻿@model UsuarioIndexViewModel
+
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<div class="row">
+    <div class="col-md-3 col-12 mb-md-0 mb-4 text-center text-white d-flex flex-column rounded-bottom rounded-start border-bottom border-3 border-danger menu">
+        <div class="mt-5 mb-5 p-3">
+            <img src="~/gifts/walk.gif" class="rounded mt-5 border border-secondary border-5" style="width:120px;" />
+        </div>
+        <div id="menu" class="menu bg-secondary bg-opacity-50 rounded">
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Home/Index">Dashboard</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Roles/Index">Roles</a></div>
+            <div class="p-3 fs-5 border-gradient"><a class="menuLink" href="../Usuarios/Index">Usuarios</a></div>
+            <div class="p-3 fs-5"><a class="menuLink" href="../Archivos/Index">Archivos Validados</a></div>
+        </div>
+    </div>
+    <div class="col-md-9 col-12">
+
+        <div class="row p-2 text-white rounded-end mensajeBienv">
+            
+            <svg class="col-2 my-auto" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-vcard-fill" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5M9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8m1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5m-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96q.04-.245.04-.5M7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0" />
+            </svg>
+
+            <p class="col-8 fs-3 my-auto text-start">Usuarios Registrados</p>
+        </div>
+
+        <div class="row justify-content-center m-4">
+            
+            <div class="col-md-5 col-12 mb-md-0 mb-3 border border-secondary border-3 rounded p-3 bg-light">
+                <div class="fs-5 text-center p-1 rounded text-light fondoInformaciones">Usuarios Activos</div>
+                <div class="mt-2 mb-2">Total usuarios: <span id="totUsu"></span></div>
+                <div id="usuariosActivos"></div>                
+            </div>
+
+            <div class="col-md-5 col-12 my-auto text-center">
+                <button type="button" class="btn btn-success text-center cajaCrearUsuario" data-bs-toggle="modal" data-bs-target="#CreateUser">
+                    Nuevo Usuario
+                </button>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center p-2 rounded-end">
+            <div class="col-md-7 col-12 mx-auto">
+                <canvas id="myDashChart"></canvas>
+            </div>
+        </div>
+
+        <div class="row p-3 mx-1 my-3 bg-secondary bg-opacity-25 rounded">
+            <div class="col-12">
+
+                <div class="row">
+
+                    <div class="row m-3">
+
+                        <div class="row mb-2 fs-5 text-center rounded text-white cabecera">
+                            <div class="col-md-1">ID</div>
+                            <div class="col-md-2">Tipo Rol</div>
+                            <div class="col-md-2">Nombre</div>
+                            <div class="col-md-2">E-mail</div>
+                            <div class="col-md-3">Contraseña</div>
+                            <div class="col-md-2">CRUD</div>
+                        </div>
+
+                        @foreach (var item in Model.Usuarios)
+                        {
+                            <div class="row bg-light mt-2 p-2 text-center justify-content-center border border-secondary border-2 rounded">
+
+                                <div class="col-md-1 col-12 my-auto">@Html.DisplayFor(modelItem => item.id_usuario)</div>
+                                <div class="col-md-2 col-12 my-auto bg-danger text-light rounded usuariosActuales">@Html.DisplayFor(modelItem => item.nombre_rol)</div>
+                                <div class="col-md-2 col-12 my-auto">@Html.DisplayFor(modelItem => item.nombre)</div>
+                                <div class="col-md-2 col-12 my-auto campoEmail">@Html.DisplayFor(modelItem => item.email)</div>
+                                <div class="col-md-3 col-12 my-auto campoContrasena">@Html.DisplayFor(modelItem => item.contrasena)</div>
+
+                                <div class="col-md-2 col-12 my-auto">
+
+                                    <div class="row justify-content-between">
+
+                                        <div class="col my-auto">
+                                            <button type="button" class="btn btn-outline-light m-1 fondoCRUD" data-bs-toggle="modal" data-bs-target="@("#EditUser-" + item.id_usuario)">
+                                                Editar
+                                            </button>
+                                        </div>
+
+                                        <div class="col my-auto">
+                                            <button type="button" class="btn btn-outline-light m-1 fondoCRUD" data-bs-toggle="modal" data-bs-target="@("#DetailUser-" + item.id_usuario)">
+                                                Detalles
+                                            </button>
+                                        </div>
+
+                                        <div class="col my-auto">
+                                            <button type="button" class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="@("#DeleteUser-" + item.id_usuario)">
+                                                Eliminar
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            
+
+                            @* ------------------------------ SECCION DE VENTANAS MODALES -------------------------------- *@
+
+                            @* --------------- CREAR USUARIO ------------------ *@
+
+                            <div class="modal fade" id="CreateUser" tabindex="-1" aria-labelledby="CreateModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Crear Usuario</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <form asp-action="Create" method="post" class="was-validated">
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="nombre">Nombre</label>
+                                                    <input id="nombre" name="nombre" class="form-control" type="text" required />
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="email">Email</label>
+                                                    <input id="email" name="email" class="form-control" type="email" required />
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="pass">Contraseña</label>
+                                                    <input id="pass" name="contrasena" class="form-control" type="text" aria-describedby="passwordHelp" required />
+                                                    <div id="passwordHelp" class="form-text">
+                                                        Cree una contraseña segura, posteriormente será cifrada
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="rol">Rol</label>
+                                                    <select id="rol" name="id_rol" class=" form-control">
+                                                        <option disabled selected>Seleccione Rol</option>
+                                                        @foreach (var rol in Model.Roles)
+                                                        {
+                                                            <option value="@rol.id_rol">@rol.nombre_rol</option>
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Crear</button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* --------------- EDITAR ------------------ *@
+
+                            <div class="modal fade" id="EditUser-@item.id_usuario" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Editar Usuario</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <form asp-action="Update" method="post" class="was-validated">
+
+                                                <input type="hidden" name="id_usuario" value="@item.id_usuario" />
+
+                                                <div class="form-group">
+                                                    <label class="control-label" for="nombre">Nombre</label>
+                                                    <input id="nombre" name="nombre" class="form-control" type="text" value="@item.nombre" required />
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="email">Email</label>
+                                                    <input id="email" name="email" class="form-control" type="email" value="@item.email" required />
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="pass">Contraseña</label>
+                                                    <input id="pass" name="contrasena" class="form-control" type="text" value="@item.contrasena" aria-describedby="passwordHelp" required />
+                                                    <div id="passwordHelp" class="form-text">
+                                                        Modifique ésta contraseña libremente. Será cifrada automáticamente.
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <label class="control-label" for="rol">Rol</label>
+                                                    <select id="rol" name="id_rol" class=" form-control">
+                                                        <option disabled selected>Seleccione Rol</option>
+                                                        @foreach (var rol in Model.Roles)
+                                                        {
+                                                            <option value="@rol.id_rol">@rol.nombre_rol</option>
+                                                        }
+                                                    </select>
+                                                </div>
+
+                                                <div class="modal-footer mt-3">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* --------------- DETALLES ------------------ *@
+
+                            <div class="modal fade" id="DetailUser-@item.id_usuario" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Detalles de Usuario</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">
+                                                    @Html.DisplayNameFor(model => item.id_usuario)
+                                                </dt>
+                                                <dd class="col-sm-9">
+                                                    @Html.DisplayFor(model => item.id_usuario)
+                                                </dd>
+                                            </div>
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">
+                                                    @Html.DisplayNameFor(model => item.nombre_rol)
+                                                </dt>
+                                                <dd class="col-sm-9">
+                                                    @Html.DisplayFor(model => item.nombre_rol)
+                                                </dd>
+                                            </div>
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">
+                                                    @Html.DisplayNameFor(model => item.nombre)
+                                                </dt>
+                                                <dd class="col-sm-9">
+                                                    @Html.DisplayFor(model => item.nombre)
+                                                </dd>
+                                            </div>
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">
+                                                    @Html.DisplayNameFor(model => item.email)
+                                                </dt>
+                                                <dd class="col-sm-9">
+                                                    @Html.DisplayFor(model => item.email)
+                                                </dd>
+                                            </div>
+
+                                            <div class="row">
+                                                <dt class="col-sm-3">
+                                                    @Html.DisplayNameFor(model => item.contrasena)
+                                                </dt>
+                                                <dd class="col-sm-9 campoContrasena">
+                                                    @Html.DisplayFor(model => item.contrasena)
+                                                </dd>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* --------------- ELIMINAR ------------------ *@
+
+                            <div class="modal fade" id="DeleteUser-@item.id_usuario" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addModalLabel">Eliminar Usuario</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <p>¿Eliminar usuario?</p>
+
+                                            <div class="modal-footer">
+                                                <form asp-action="Delete" method="post">
+                                                    <input type="hidden" name="id_usuario" value="@item.id_usuario" />
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-secondary">Borrar</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    const ctx = document.getElementById('myDashChart');
+    let arrayUsuarios = [];
+    let objUsu = {};
+    let usuarios = document.getElementsByClassName("usuariosActuales");
+
+    for (let usu of usuarios) {
+        arrayUsuarios.push(usu.innerHTML.trim());
+        
+    }
+
+    for (const nombre of arrayUsuarios) {
+        if (objUsu[nombre]) {
+            objUsu[nombre]++;
+        } else {
+            objUsu[nombre] = 1; 
+        }
+    }
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(objUsu),
+            datasets: [{
+                label: '# of Votes',
+                data: Object.values(objUsu),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    console.log("hola");
+
+</script>

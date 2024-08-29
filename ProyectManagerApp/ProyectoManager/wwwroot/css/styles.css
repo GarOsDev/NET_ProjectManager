@@ -1,0 +1,381 @@
+﻿
+
+.iniciarSesion {
+    background-color: transparent;
+    transform: scale(0.9);
+    transition: all 0.5s;
+}
+
+    .iniciarSesion:hover {
+        background-color: #A0153E;
+        color: white;
+        transform: scale(1);
+    }
+
+.menuEnlace {
+    transition: all 750ms;
+}
+.menuEnlace:hover {
+    background-color: #028391;
+    border-radius: 10px;
+    padding:5px 20px;
+}
+
+.rutaURL {
+    transition: all 500ms;
+}
+
+.rutaURL:hover {
+    font-size:17px;
+}
+
+.menuLink {
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease-out;
+}
+
+    .menuLink:hover {
+        background-color: #028391;
+        border-radius: 10px;
+        padding: 5px 30px;
+        color:white;
+    
+    }
+
+.balloon {
+    
+    font-family: "Orbitron";
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 4rem;
+    background-image: url(https://media.giphy.com/media/sxu1sBZtN9WOk/giphy.gif);
+    background-size: cover;
+    color: transparent;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+}
+
+.form {
+    background-color: transparent;
+}
+
+.foot {
+    
+}
+
+.emailFooter{
+    width:50px;
+}
+
+@keyframes LoudIcon{
+    0%{
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-35deg);
+        transform: scale(1.2)
+    }
+    50% {
+        transform: scale(1);
+        transform: rotate(-35deg);
+    }
+    75% {
+        transform: scale(1.2);
+        transform: rotate(-35deg);
+    }
+    100%{
+        transform:rotate(0deg);
+    }
+}
+
+.imgFooter1 {
+    animation: LoudIcon 0.5s linear;
+}
+
+@keyframes rotateYIcon {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.imgFooter2 {
+    animation: rotateYIcon 0.5s linear;
+}
+
+@keyframes rotateZIcon {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    25%{
+        transform:rotateZ(-30deg);
+    }
+    50%{
+        transform:rotateZ(30deg);
+    }
+    75% {
+        transform: rotateZ(-30deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+.imgFooter3 {
+    animation: rotateZIcon 0.75s linear;
+}
+
+.infoLink {
+    background-color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s;
+}
+
+    .infoLink:hover{
+        background-color: #A0153E;
+        padding: 10px 10px;
+        text-decoration: none;
+        color: white;
+        
+    }
+
+.mensajeBienv {
+    background-color: #334756;
+}
+
+.menu {
+    background-color: #334756;
+}
+
+.navbarppal {
+    background-color: #334756;
+}
+
+.logo {
+    width: 300px;
+    height: 250px;
+}
+
+
+.carrPhoto {
+    width: 350px;
+    height: 250px;
+}
+
+.menuIcon {
+    animation: rotate 3s infinite ease;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.menuIcon2 {
+    animation: rotate2 3s infinite ease;
+}
+
+@keyframes rotate2 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.cajaCrearRol {
+    background-color: #0E8388;
+    border-radius: 5px;
+    width: 300px;
+    transition: background-color 0.5s, width 1s;
+}
+
+    .cajaCrearRol:hover {
+        background-color: #2E4F4F;
+        color: black;
+        width: 200px;
+    }
+
+.linkCrearRol {
+    text-decoration: none;
+    color: white;
+}
+
+    .linkCrearRol:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+
+.cajaCrearUsuario {
+    background-color: #009987;
+    border-radius: 5px;
+    width: 300px;
+    transition: all 0.5s;
+}
+
+    .cajaCrearUsuario:hover {
+        background-color: #2C4E80;
+        width: 200px;
+    }
+
+.campoEmail {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.campoContrasena {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.campoContenido{
+ 
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+}
+
+.enlaceOpcionesUsu {
+    text-decoration: none;
+}
+
+.cajaCrearProyecto {
+    background-color: #FFD371;
+    border-radius: 5px;
+    width: 300px;
+    transition: background-color 0.5s, width 1s;
+}
+
+    .cajaCrearProyecto:hover {
+        background-color: #FF4848;
+        width: 200px;
+    }
+
+.linkCrearProyecto {
+    text-decoration: none;
+    color: black;
+}
+
+    .linkCrearProyecto:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+.fondoCRUD {
+    background-color: #3C5B6F;
+}
+
+.oculto{
+    opacity:0;
+}
+
+.visible {
+    opacity: 1;
+    transition: all 500ms;
+}
+
+.colorOpcionMenuMigaPan{
+    background-color: steelblue;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border:1px solid white;
+}
+
+#menu{
+    position:sticky;
+    top:50px;
+}
+
+.infoCabecera {
+    position: sticky;
+    top: 50px;
+    transition:all 1s;
+}
+
+.cabecera {
+    background-color: #344C64;
+}
+
+.tituloPublicacionArchivo {
+    background-color: #FFC470;
+}
+
+.linkPrivacy {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(218deg, #ffffff, #008cff, #000000);
+    background-size: 600% 600%;
+    animation: coolGradient 10s ease infinite;
+}
+
+.fondoInformaciones {
+    background-color: #722F37;
+}
+
+.infoDeleteModalButton{
+    text-decoration:none;
+    color:white;
+}
+
+.border-gradient {
+    border-bottom: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+    border-image-source: linear-gradient(to left, white, #334756);
+}
+
+.imgBorder {
+    border-radius: 15px;
+}
+
+@keyframes coolGradient {
+    0% {
+        background-position: 92% 0%
+    }
+
+    50% {
+        background-position: 9% 100%
+    }
+
+    100% {
+        background-position: 92% 0%
+    }
+}
+
+.miClaseCSSTiny {
+    border-radius: 15px;
+    max-width: 100%;
+    height: auto;
+}
+
+.shadow {
+    box-shadow: 10px 10px 15px 0px rgba(0,0,0,0.75);
+    background-color: #607274;
+}
+
+.labelInfo {
+    background-color: #009987;
+}
+
+

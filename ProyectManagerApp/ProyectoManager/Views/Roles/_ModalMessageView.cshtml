@@ -1,0 +1,23 @@
+﻿@model Roles
+
+@{
+    ViewData["Title"] = "Delete Info";
+}
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Atención</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Existen <b>usuarios</b> con este Rol en la Aplicación</p>
+                <p>Si quiere eliminar este Rol deberá eliminarlos o cambiarles su Rol</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a href="../Roles/Index" class="infoDeleteModalButton">Close</a></button>
+            </div>
+        </div>
+    </div>
+</div>

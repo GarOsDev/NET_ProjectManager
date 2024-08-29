@@ -1,0 +1,30 @@
+﻿@model Roles
+
+<div class="modal fade" id="DetailRol-@Model.id_rol" tabindex="-1" aria-labelledby="DetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addModalLabel">Detalles de Rol</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.id_rol)
+                    </dt>
+                    <dt class="col-sm-1">
+                        @Html.DisplayFor(model => model.id_rol)
+                    </dt>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.nombre_rol)
+                    </dt>
+                    <dt class="col-sm-5">
+                        @Html.DisplayFor(model => model.nombre_rol)
+                    </dt>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
