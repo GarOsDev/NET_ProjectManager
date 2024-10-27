@@ -8,6 +8,6 @@ El diseño y desarrollo de la misma ha sido totalmente procedimental, ajustándo
 desarrollo que se iban paulatinamente presentando hasta dar forma a una aplicación funcional y con  
 objetivos específicos.
 
-El usuario base, originalmente registrado en la aplicacion será:
+El usuario de prueba que originalmente se ha registrado en la aplicacion será:
 default@outlook.com
 pass: 123
